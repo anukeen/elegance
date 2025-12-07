@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEGANCE | Салон Красоты Premium</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* --- 1. Глобальные настройки и Переменные --- */
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --dark: #121212;
+            --dark-gray: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-gray: #aaaaaa;
+            --glass: rgba(30, 30, 30, 0.85);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        
+        /* Плавная прокрутка */
+        html { scroll-behavior: smooth; }
+
+        /* --- 2. UI Элементы --- */
+        .btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: linear-gradient(45deg, var(--gold), #b8860b);
+            color: var(--dark);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: #fff;
+            opacity: 0.2;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover::after { width: 100%; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5); }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+        }
+
+        /* Декоративная линия под заголовком */
+        .section-title::after {
+            content: '♦';
+            display: block;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-top: 10px;
+            text-shadow: 0 0 10px var(--gold);
+        }
+
+        /* --- 3. Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(18, 18, 18, 0.0);
+            transition: var(--transition);
+            backdrop-filter: blur(0px);
+        }
+
+        header.scrolled {
+            background: var(--glass);
+            padding: 15px 5%;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: var(--text-light);
+            letter-spacing: 2px;
+        }
+
+        .logo span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0; width: 0%; height: 2px;
+            background: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--gold); }
+        .nav-links a:hover::before { width: 100%; }
+
+        .phone-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Мобильное меню */
+        .burger { display: none; cursor: pointer; font-size: 1.5rem; color: var(--gold); }
+
+        /* --- 4. Hero Section --- */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content { max-width: 800px; padding: 20px; }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            background: linear-gradient(to right, #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #ddd;
+        }
+
+        /* Анимация прокрутки вниз */
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--gold);
+            font-size: 2rem;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* --- 5. About / Features --- */
+        .features {
+            padding: 80px 10%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            background: var(--dark-gray);
+            margin-top: -50px; /* Наложение на Hero */
+            position: relative;
+            z-index: 10;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 30px;
+            background: #252525;
+            border-radius: 15px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        /* --- 6. Services --- */
+        .services { padding: 100px 5%; background: var(--dark); }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: var(--dark-gray);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            group;
+        }
+
+        .service-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .service-card:hover .service-img { transform: scale(1.1); opacity: 0.6; }
+
+        .service-info {
+            padding: 25px;
+            position: relative;
+        }
+
+        .service-price {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 5px 15px;
+            font-weight: 700;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .service-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #444;
+            padding-bottom: 5px;
+        }
+
+        /* --- 7. Gallery (Parallax) --- */
+        .gallery-parallax {
+            height: 400px;
+            background: fixed url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .gallery-overlay {
+            background: rgba(0,0,0,0.7);
+            padding: 50px;
+            border: 2px solid var(--gold);
+            text-align: center;
+        }
+
+        /* --- 8. Contact Section --- */
+        .contacts {
+            padding: 100px 5%;
+            background: linear-gradient(to bottom, var(--dark), #0a0a0a);
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item i {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 20px;
+            font-size: 1.5rem;
+        }
+
+        .big-phone {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            display: block;
+            margin-top: 10px;
+            transition: var(--transition);
+        }
+
+        .big-phone:hover {
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            transform: scale(1.05);
+        }
+
+        .booking-form {
+            flex: 1;
+            min-width: 300px;
+            background: var(--dark-gray);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: #111;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 5px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* --- 9. Footer --- */
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: #000;
+            border-top: 1px solid #333;
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .socials { margin-bottom: 20px; }
+        .socials a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin: 0 10px;
+        }
+        .socials a:hover { color: var(--gold); }
+
+        /* --- 10. Адаптивность (Mobile) --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                width: 70%;
+                background: var(--dark-gray);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                border-left: 2px solid var(--gold);
+            }
+
+            .nav-links.nav-active { right: 0; }
+            
+            .burger { display: block; z-index: 1001; }
+            
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; width: 100%; }
+            .features { padding: 40px 5%; margin-top: 0; }
+            
+            .big-phone { font-size: 1.8rem; }
+            
+            .contact-container { flex-direction: column-reverse; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="logo">ELEGANCE<span>.</span></div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#hero">Главная</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#portfolio">Портфолио</a></li>
+                <li><a href="#contacts" class="btn-nav">Контакты</a></li>
+            </ul>
+        </nav>
+        <div class="burger">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
+            <h4>Премиум Салон Красоты</h4>
+            <h1>Искусство Быть Совершенной</h1>
+            <p>Эксклюзивный уход, лучшие мастера и атмосфера роскоши специально для вас.</p>
+            <a href="tel:+77074534518" class="btn">Записаться онлайн</a>
+        </div>
+        <a href="#about" class="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <section id="about" class="features">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+            <i class="fas fa-gem feature-icon"></i>
+            <h3>Премиум Материалы</h3>
+            <p>Мы используем только сертифицированную косметику мировых брендов.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+            <i class="fas fa-user-tie feature-icon"></i>
+            <h3>Топ-Стилисты</h3>
+            <p>Наши мастера регулярно проходят обучение в Европе и СНГ.</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+            <i class="fas fa-coffee feature-icon"></i>
+            <h3>Уют & Комфорт</h3>
+            <p>Вкуснейший кофе, шампанское и расслабляющая музыка для наших гостей.</p>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <h2 class="section-title" data-aos="fade-up">Наши Услуги</h2>
+        <p class="section-subtitle" data-aos="fade-up">Полный спектр услуг для вашей красоты</p>
+
+        <div class="services-grid">
+            <div class="service-card" data-aos="fade-right">
+                <div style="overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Hair" class="service-img">
+                </div>
+                <div class="service-info">
+                    <span class="service-price">от 5 000 ₸</span>
+                    <h3>Парикмахерский зал</h3>
+                    <ul class="service-list">
+                        <li><span>Стрижка женская</span> <span>5 000 ₸</span></li>
+                        <li><span>Сложное окрашивание</span> <span>25 000 ₸</span></li>
+                        <li><span>Укладка Lux</span> <span>8 000 ₸</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card" data-aos="fade-up">
+                <div style="overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Nails" class="service-img">
+                </div>
+                <div class="service-info">
+                    <span class="service-price">от 4 000 ₸</span>
+                    <h3>Nail Сервис</h3>
+                    <ul class="service-list">
+                        <li><span>Маникюр + Гель</span> <span>6 000 ₸</span></li>
+                        <li><span>Педикюр SMART</span> <span>8 000 ₸</span></li>
+                        <li><span>Дизайн (1 ноготь)</span> <span>500 ₸</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card" data-aos="fade-left">
+                <div style="overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Makeup" class="service-img">
+                </div>
+                <div class="service-info">
+                    <span class="service-price">от 10 000 ₸</span>
+                    <h3>Визаж и Брови</h3>
+                    <ul class="service-list">
+                        <li><span>Вечерний макияж</span> <span>15 000 ₸</span></li>
+                        <li><span>Архитектура бровей</span> <span>4 000 ₸</span></li>
+                        <li><span>Ламинирование ресниц</span> <span>12 000 ₸</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;" data-aos="zoom-in">
+            <a href="tel:+77074534518" class="btn">Полный прайс-лист</a>
+        </div>
+    </section>
+
+    <section id="portfolio" class="gallery-parallax">
+        <div class="gallery-overlay" data-aos="zoom-in">
+            <h2>Ваша Красота — Наше Вдохновение</h2>
+            <p style="margin: 20px 0;">Посмотрите работы наших топ-стилистов в Instagram</p>
+            <a href="#" class="btn" style="background: transparent; border: 2px solid var(--gold); color: #fff;">
+                <i class="fab fa-instagram"></i> Перейти в Instagram
+            </a>
+        </div>
+    </section>
+
+    <section id="contacts" class="contacts">
+        <h2 class="section-title" data-aos="fade-up">Контакты</h2>
+        
+        <div class="contact-container">
+            <div class="contact-info" data-aos="fade-right">
+                <h3>Свяжитесь с нами</h3>
+                <p style="color: #888; margin-bottom: 30px;">Мы всегда рады видеть вас в нашем салоне. Позвоните нам или оставьте заявку.</p>
+                
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div>
+                        <span>Телефон для записи:</span>
+                        <a href="tel:+77074534518" class="big-phone">+7 707 453 45 18</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <span>Адрес:</span>
+                        <p style="color: #fff;">г. Астана, ул. Примерная, 10</p>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <i class="far fa-clock"></i>
+                    <div>
+                        <span>Режим работы:</span>
+                        <p style="color: #fff;">Ежедневно: 10:00 - 21:00</p>
+                    </div>
+                </div>
+            </div>
+
+            <form class="booking-form" data-aos="fade-left">
+                <h3 style="margin-bottom: 20px; text-align: center;">Оставить заявку</h3>
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Ваше имя">
+                </div>
+                <div class="form-group">
+                    <input type="tel" class="form-control" placeholder="Ваш телефон (+7 ...)">
+                </div>
+                <div class="form-group">
+                    <select class="form-control">
+                        <option>Выберите услугу</option>
+                        <option>Стрижка</option>
+                        <option>Маникюр</option>
+                        <option>Макияж</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Отправить</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="socials">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <p>&copy; 2024 ELEGANCE Beauty Salon. Все права защищены.</p>
+        <p style="font-size: 0.8rem; margin-top: 10px; color: #444;">Разработано с ❤️ для Вашей красоты</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Инициализация анимаций при скролле
+        AOS.init({
+            once: true,
+            offset: 100,
+        });
+
+        // Логика Header (изменение фона при скролле)
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Мобильное меню
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            nav.classList.toggle('nav-active');
+            
+            // Анимация ссылок
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+            
+            // Анимация бургера
+            burger.classList.toggle('toggle');
+        });
+
+        // Закрытие меню при клике на ссылку
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('nav-active');
+            });
+        });
+    </script>
+</body>
+</html>
