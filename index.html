@@ -87,15 +87,13 @@
         .btn:hover::after { width: 100%; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.5); }
 
+        /* === ИСПРАВЛЕНИЕ ЦЕНТРОВКИ ЗАГОЛОВКОВ === */
         .section-title {
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 1rem;
             position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap; /* Чтобы текст не ломался при центровке */
+            /* Убраны лишние свойства, которые сбивали центровку */
         }
 
         .section-subtitle {
@@ -456,12 +454,10 @@
             
             .hero h1 { font-size: 2.5rem; }
             
-            /* Исправляем ширину заголовков на мобильных */
+            /* === ИСПРАВЛЕНИЕ ЦЕНТРОВКИ НА МОБИЛЬНЫХ === */
             .section-title { 
                 font-size: 2rem; 
-                width: auto; /* auto лучше 100% для центровки transform */
-                max-width: 90%;
-                white-space: normal;
+                /* Убраны лишние свойства, теперь используется стандартное поведение */
             }
 
             .features { padding: 40px 5%; margin-top: 0; }
